@@ -16,6 +16,7 @@
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
     "next": "latest",
+    "nextjs-cors": "^2.1.1",
     "pug": "^3.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
