@@ -1,38 +1,37 @@
-const express = require("express");
-var createError = require("http-errors");
-const cors = require("cors");
-const next = require("next");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var indexRouter = require("./routes/index");
+const express = require('express');
+const next = require('next');
+const rateLimit = require('express-rate-limit');
+
 const port = parseInt(process.env.PORT, 10) || 8002;
-const dev = process.env.NODE_ENV !== "production";
+const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
-// var app = express();
 const handle = app.getRequestHandler();
-// app.use("/", indexRouter);
+
 app.prepare().then(() => {
   const server = express();
-  var corsOptions = function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization, Content-Length, X-Requested-With"
-    );
-    next();
-  };
 
-  server.use(corsOptions);
-  server.set('views', path.join(__dirname, 'views'));
-  server.set('view engine', 'pug');
-  server.use('/', indexRouter);
-  server.all("*", (req, res) => {
+  const limiter = rateLimit({
+    windowMs: 10 * 1000, // 15 minutes
+    max: 3, // limit each IP to 100 requests per windowMs
+  });
+
+  server.use(limiter);
+  server.set('trust proxy', 1);
+
+  server.get('/api/update', (req, res) => {
+    console.log(req.headers);
     return handle(req, res);
   });
 
-  server.listen(port, () => {
+  server.get('/api/greet', (req, res) => {
+    console.log(req.headers);
+    return handle(req, res);
+  });
+  server.get('*/*', (req, res) => {
+    return handle(req, res);
+  });
+  server.listen(port, (err) => {
+    if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });
 });
