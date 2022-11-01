@@ -30,12 +30,18 @@ app.prepare().then(() => {
   // server.set("trust proxy", 1);
 
   server.get("/api/update", (req, res) => {
-    // console.log(req.headers);
     return handle(req, res);
   });
-
-  server.get("/api/greet", (req, res) => {
-    // console.log(req.headers);
+  server.get("/api/hot", (req, res) => {
+    return handle(req, res);
+  });
+  server.get("/api/complete", (req, res) => {
+    return handle(req, res);
+  });
+  server.get("/api/novel", (req, res) => {
+    return handle(req, res);
+  });
+  server.get("/api/chapter", (req, res) => {
     return handle(req, res);
   });
   server.get("*/*", (req, res) => {
