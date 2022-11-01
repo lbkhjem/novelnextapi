@@ -6,10 +6,19 @@
     "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.2",
+    "debug": "^4.3.4",
     "express": "^4.17.1",
+    "http-errors": "^2.0.0",
+    "morgan": "^1.10.0",
     "next": "latest",
+    "pug": "^3.0.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
   }
 }
